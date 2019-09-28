@@ -1,0 +1,10 @@
+{% extends 'base.html'%}
+{%block content%}
+{% load widget_tweaks %}
+<!--{% load crispy_forms_tags %}-->
+<form action= "" method="post" >
+{% csrf_token %}
+{{form.as_table}}
+<button type="submit">Define Role</button> </a>
+</form>
+{% endblock %}

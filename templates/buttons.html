@@ -1,0 +1,115 @@
+{% extends 'nav.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% load static%}
+<style type="text/css">
+.flex-container {
+  display: flex;
+  /* background-color: rgb(187, 190, 194); */
+}
+.body{
+    background-color: rgb(190, 190, 190);
+}
+.option1{
+    text-align: center;
+    font-family: 'apple-system';
+}
+.select1{
+    text-align: center;
+    font-family: 'apple-system';
+}
+table{
+    background-color: #ffffff;
+}
+td,th{
+    font-family: '-apple-system';
+  font-size: 15px;
+  text-align: center;
+}
+.flex-container > h4 {
+  background-color: #ffffff;
+  margin: 10px;
+  padding: 20px;
+  font-size: 15px;
+  color:rgb(24, 22, 22);
+}
+</style>
+  <link rel="stylesheet" id="packer_css" type="text/css" href="{% static 'css/my.min.css' %}">
+<title>Map Data</title>
+
+<div align=center class="flex-container">
+    <h4 style="font-family: -apple-system" > ClientName : {{clientname}} </h4>
+    <h4 style="font-family: -apple-system">Engagement : {{engangement}}</h4>
+</div>
+<form style="" id="myform" method="POST">
+        {% csrf_token %}
+    {{form}}
+    <div style="width:%;background-color: whitesmoke;">
+            <p><b><h4 id="Clientfield" class="InputField">Client Field </h4></b>
+                Client Field represents first row of the table mentioned below.</p>
+            <p><b><h4 class="Audtech">Audtech Field</h4></b>
+                Audtech Field represents second row of the table mentioned below.</p>
+                
+    </div>
+    <div class="wmd-view-topscroll">
+            <div class="scroll-div1">
+            </div>
+        </div>
+        <div class="wmd-view">
+            <div class="scroll-div2">
+                    {{frame|safe}}
+            </div>
+    </div>
+<ul align="right" style="padding-left:3%"><button class="button"  type="submit" value="submit">Submit</button></ul>
+</form>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script>
+// var cycleArr = {{count|safe}};
+
+// var strTable = "";
+// for(var i = 0; i < cycleArr.length; i++) {
+//   for(var j = 0; j < cycleArr[i].length; j++) {
+//     strTable += "<th>";
+//     strTable += cycleArr[i][j];
+//     strTable += "</th>";
+//   }
+// }
+// $('#model').append(strTable);
+// $('th').appendTo('.dataframe')
+$('').appendTo('')
+$('th').append("<select class='select1' required><option class='option1' value=''></option></select>")
+</script>
+<script>
+		var numbers =['Sr No','Journal Date','Journal Number','Journal Type','Status PostedUnposted','Posting Date','Division Code','Transaction Type','Reference No','Account Category','Main Account Code','Main Account Name','Sub Account Code','Sub Account Name','Year','Group Name','Short Text','Tax Reference','Split between heads','Created By','Authorised By','Currency Code','Debit Amount','Credit Amount','Debit Amount FC','Credit Amount FC','Document Header Text','Entity Code'];
+	for (var i=0;i<numbers.length;i++){
+		   $('<option/>').val(numbers[i]).html(numbers[i]).appendTo('.select1');
+		}
+  // the table is added to the HTML div element
+    var rows = $('select');
+    for (var i=0; i < rows.length; ++i){
+        rows[i].name = "C" + (i+1);  // this is how you assign IDs
+        // console.log(rows[i]);
+	}
+    
+</script>
+<script type="text/javascript">
+    var rows = $('.select1');
+    for (var i=0; i < rows.length; ++i){
+        var $dropdown1 = $("select[name='C"+(i+1)+"']");
+        // console.log($dropdown1)
+        var $dropdown2 = $("select[name='C"+(i+2)+"']");
+        // console.log($dropdown2)
+    var $dropdown1 = $("select[name='C1']");
+    var $dropdown2 = $("select[name='C2']"); 
+    $dropdown1.change(function() {
+    $dropdown2.find('option').prop("disabled", false);
+    var selectedItem = $(this).val();
+    if (selectedItem) {
+    $dropdown2.find('option[value="' + selectedItem + '"]').remove();
+                }
+            });  
+    };
+    </script>
+
+{% endblock %}
+

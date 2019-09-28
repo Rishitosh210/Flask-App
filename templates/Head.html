@@ -1,0 +1,58 @@
+{% load static %}
+<html>
+    <head>
+    {% block head %}
+    {% endblock %}
+    <meta content="utf-8">
+    <title>{% block title %} Audtech {% endblock %}</title>
+    <!-- Tell the browser to be responsive to screen width -->
+
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.5 -->
+    {% load staticfiles %}
+    {% include 'all_render.html'%}
+    <!-- <link rel="stylesheet" id="packer_css" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
+    <link rel="stylesheet" id="packer_css" type="text/css" href="{% static 'css/my.min.css' %}">
+    <link rel="stylesheet" id="packer_css" type="text/css" href="{% static 'dist/css/AdminLTE.css' %}">
+    <link rel="stylesheet" id="packer_css" type="text/css" href="{% static 'dist/css/AdminLTE.min.css' %}">
+    <link rel="stylesheet" id="packer_css" type="text/css" href="{% static 'js/bootstrap/css/bootstrap.css' %}">
+<style>
+
+</style>
+  
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+  </head>
+    <body class="colour">
+ <header >
+<div class="navbar" id="myTopnav">
+
+  <a href="/ClientTable" class="navbar-header">AT Analytics</a>
+  <a href="/analytics">Analyze</a>
+  <a href="/reports">Report</a>
+  <a href="/ERPMap">ERP Administrator</a>
+  <a href="/CreateUser">Create User</a>
+  {%if clientname%} <a > Clientname :  {{ clientname }} </a>{% endif %}
+  {% if username %}<a>Name of User :   {{ username  }} </a>{% endif %}
+<a href="/Engagement">Engagement:  {%if engangement %} {{ engangement  }} {% endif %}</a>
+   {{ customer  }} 
+  <a href="/logout">Logout</a>
+
+  {%if engangement %}<a href="/processfile">Import Data</a>{% endif %}
+</header>
+</div>
+<div class="content">
+    
+        {% block content %}
+        {% endblock %}
+
+</div>
+
+
+</body>
+</html>

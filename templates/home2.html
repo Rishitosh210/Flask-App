@@ -1,0 +1,26 @@
+{% extends 'nav1.html' %}
+{% block content %}
+
+<div class="tablediv">
+        <table id="example" class="table table-dark " style="width:100%">
+              <thead >
+                  <tr>
+                      <th>UserName</th>
+                      <th>Email Address </th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for data in details %}
+                  <tr>
+                      <td>{{ data.username|default:"null"}}</td>
+                      <td>{{ data.email|default:"null"}}</td>
+                  </tr>
+                    {% endfor %}
+              </tbody>
+                 
+              <tfoot>
+                  <tr>
+                  </tr>
+              </tfoot>
+          </table>
+{% endblock %}

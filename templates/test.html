@@ -1,0 +1,255 @@
+
+    {% extends 'nav.html' %}
+    {% load crispy_forms_tags %}
+    {% block content %}
+    {% include 'all_render.html' %}
+    <style>
+    .right{
+    box-shadow: 2px;
+    }
+    .dataframe{
+        background-color: #ffffff;
+    margin-bottom: 20px;
+    text-transform: capitalize;
+    }
+    
+    </style>    
+     <button class="button" id="show" > Raw Data</button>
+        <div  class="right" >
+            File Detail
+            <li> <span> {{filename}} </span></li>
+                <li>Engagements Year  :  <span>{{engangement}}</span></li>
+    
+                <li>:Transaction Total : <span> {{transaction}}</span></li>
+                <li>
+                    Audit By <span>{{username}}</span>
+                </li>
+        </div>
+            <div class="right1" style="margin: 3% 10%;"  >
+                    <p style="text-align:center"> Journal Entry Gap</p>
+                    {% if missing %}
+                     <a href="/reports"><p style="text-align:center"> {{missing|safe}} </p></a>
+                    {% else %}
+                  <li>Dont have any Missing Value</li> 
+                    {% endif %}
+            </div>
+            <div class="right" style="margin: -1% -1%;">
+                    JE creation & Authorisation by same user
+                    {% if cre_equ_auth %}
+                    <a href="/reports"> {{cre_equ_auth|safe}}</a>
+                    {% else %}
+                    <li> All Enteries have different Authorisation</li>
+                    {% endif %}
+            </div>
+            <table id="JEuser" class="table" style=" width: 50%">
+                <tr>
+                    <th>Top users</th>
+                    <th>No. of JE</th>
+                    <th>value of jE(DR)</th>
+                    <th>value of jE(CR)</th>
+                </tr>
+                    {% for JE in JEuser %}
+                    <tr>
+                            <td> {{JE.created_by}} </td>
+                            <td>{{JE.JE}}</td>
+                            <td>{{JE.DR}}</td>
+                            <td>{{JE.CR}}</td>
+                    </tr>
+
+                {% endfor %}
+            </table> 
+                        <table class="table" id="Status" style="  width: 50%">
+                                <tr>
+                                    <th>Status</th>
+                                    <th>Posted Unposted JE</th>
+                                </tr>
+                                    {% for JE in pos_unpos %}
+                                    <tr>
+                                            <td> {{JE.status_op_posted_unposted}} </td>
+                                            <td>{{JE.posted_unposted}}</td>
+                                    </tr>
+    
+                                    
+                                {% endfor %}
+                            </table>
+                            <table class="table"id="auto_manual" style=" width: 50%">
+                                    <tr>
+                                        <th>auto or  manual</th>
+                                        <th>Generated</th>
+                                    </tr>
+                                    {% for JE in auto_manual %}
+                                    <tr>
+                                            <td> {{JE.auto_manual}} </td>
+                                            <td>{{JE.Generated}}</td>
+                                    </tr>
+                                      
+                                    {% endfor %}  
+                               
+                            </table>  
+         
+     {{raw_data|safe}}
+                <div id="chart1"  class="charts">  </div>
+                <div id= "chart2"   class="charts"> </div>
+                {% for messages in messages %}
+                {% if message.tags == 'error' %}
+                      <div id="test">
+                          <div class=" callout callout-success">
+                            <h4 style="padding: 14px 14px ; text-align:center; font-size: 16px; height:auto; ">{{messages}}</h4>
+                      </div>
+                    </div>
+                {% else %}
+                      <div id="test1" >
+                          <div class="callout callout-danger" >
+                      <h4 style="padding: 14px 14px ; text-align:center; font-size: 16px; height:auto; ">{{messages}}</h4>       
+                     </div>
+                      </div>
+                {% endif %}  
+                {% endfor %}
+                {{frame|safe}}
+            </div>
+                <script src="https://code.highcharts.com/highcharts.src.js"></script>
+                <script>
+                  Highcharts.chart('chart1', {
+                      chart: {
+                          type: 'bar'
+                      },
+                      title: {
+                          text: 'Mani Accnt Catg'
+                      },
+                      xAxis: {
+                          categories: [
+                            {% for entry in dataset %}'{{ entry.acct_category }} Class'{% if not forloop.last %}, {% endif %}{% endfor %}
+                          ]
+                      },
+                      series: [{
+                          name: 'Status',
+                          data: [
+                            {% for entry in dataset %}{{ entry.survived_count }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                          ],
+                          color: 'green'
+                      }, {
+                          name: 'Type',
+                          data: [
+                            {% for entry in dataset %}{{ entry.not_survived_count }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                          ],
+                          color: 'red'
+                      }]
+                  });
+                </script>
+                <script>
+                        Highcharts.chart('chart2', {
+                            chart: {
+                                type: 'pie'
+                            },
+                            title: {
+                                text: 'Maanalyticsni Accnt Catg'
+                            },analytics
+                            xAxis: {analytics
+                                categorieanalyticss: [
+                                  {% for entry in dataset %}'{{ entry.acct_category }} Class'{% if not forloop.last %}, {% endif %}{% endfor %}
+                                ]
+                            },
+                            series: [{
+                                name: 'Status',
+                                data: [
+                                  {% for entry in dataset %}{{ entry.survived_count }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                                ],
+                                color: 'green'
+                            }, {
+                                name: 'Type',
+                                data: [
+                                  {% for entry in dataset %}{{ entry.not_survived_count }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                                ],
+                                color: 'blue'
+                            }]
+                        });
+                      </script>
+               <script>
+    $(document).ready(function(){
+      $("#show").click(function(){
+        $(".dataframe").toggle();
+      });
+ });
+    </script>
+        <!-- <script>
+                $(function() {
+                $( "#analytics" ).dialog({
+                modal: true,
+                autoOpen=false,
+                resizable: false,
+                 buttons : [
+                     {text  : 'karo',
+                     class : 'button-class',
+                    click : function() {
+                    $(this).dialog('close');      
+            }
+              }]
+            });
+            $( "#opener" ).on( "click", function() {
+                $( "#analytics" ).dialog( "open" );
+        }); 
+             });
+    </script> -->
+      <script>
+            $( function() {
+              $( "#analytics" ).dialog({
+                autoOpen: false,
+                modal: true,
+                show: {
+                  effect: "blind",
+                  duration: 1000
+                },
+                hide: {
+                  effect: "fold",
+                  duration: 1000
+                },
+                buttons : [
+                     {text  : 'cancel',
+                     class : 'button-class',
+                    click : function() {
+                    $(this).dialog('close');      
+            }
+              }]
+              });
+           
+              $( "#opener" ).on( "click", function() {
+                $( "#analytics" ).dialog( "open" );
+              });
+            } );
+            </script>
+                <script>
+                        $(function() {
+                            $( "#test" ).dialog({
+                        modal: true,
+                        resizable: false,
+                         buttons : [
+                             {text  : 'Engagement',
+                             class : 'button-class',
+                            click : function() {
+                            $(this).dialog('close');
+                          window.location="/Engagement";
+                    }
+                      }]
+                    }); 
+                     });
+                    </script>
+                     <script>
+                     $(function() {
+                            $( "#test1" ).dialog({
+                        modal: true,
+                        resizable: false,
+                         buttons : [
+                             {text  : 'close',
+                             class : 'button-class',
+                            click : function() {
+                            $(this).dialog('close');
+                            window.location="/analytics";
+                    }, 
+                     }],
+                             }); 
+                     });
+                     </script>
+    {% endblock %}
+             
+             
+    

@@ -1,0 +1,52 @@
+{% extends 'nav.html' %}
+{% block content %}
+{% load humanize %}
+<style>
+
+</style>
+<div class="wmd-view-topscroll">
+        <div class="scroll-div1">
+        </div>
+    </div>
+    <div class="wmd-view">
+        <div class="scroll-div2">
+    <table  class="table" id="ShortTextJV" style="">
+    <thead>
+        <th>Journal Date </th>
+        <th>Posting Date</th>
+        <th>Sr No</th>
+        <th>Journal Number</th>
+        <th>Main Account Name</th>
+        <th>Sub Account Name</th>
+        <th>Credit Amount FC</th>
+
+        </thead>
+        {% for JV in ShortTextJV %}
+        <tr>
+           {% if JV.JournalDate %} <td>{{JV.JournalDate}}</td>{% endif %}
+           {% if JV.PostingDate %} <td>{{JV.PostingDate}}</td>{% endif %}
+           {% if JV.SrNo %} <td>{{JV.SrNo}}</td>{% endif %}
+           {% if JV.JournalNumber %} <td>{{JV.JournalNumber}}</td>{% endif %}
+           {% if JV.MainAccountName %} <td>{{JV.MainAccountName}}</td>{% endif %}
+           {% if JV.SubAccountName %}<td>{{JV.SubAccountName}}</td>{% endif %}
+           {% if JV.DebitAmountFC %} <td>{{JV.DebitAmountFC|intcomma}}</td>{% endif %}
+           {% if JV.CreditAmountFC %} <td>{{JV.CreditAmountFC|intcomma}}</td>{% endif %}
+            </tr>
+        {% endfor %}
+    </table> 
+</div>
+</div>
+<!-- <script>
+$(function(){
+    $(".wmd-view-topscroll").scroll(function(){
+        $(".wmd-view")
+            .scrollLeft($(".wmd-view-topscroll").scrollLeft());
+    });
+    $(".wmd-view").scroll(function(){
+        $(".wmd-view-topscroll")
+            .scrollLeft($(".wmd-view").scrollLeft());
+    });
+});
+
+</script> -->
+{% endblock %}

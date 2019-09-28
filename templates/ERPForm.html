@@ -1,0 +1,29 @@
+{% extends 'nav.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<div class="container"  align=center >
+<h3> Financial System-Audtech Mapping</h3>
+    {% crispy form %}
+</div>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th> ERP </th>
+            <th>System Field</th>
+            <th> Audtech Field</th>
+            </tr>
+    </thead>
+    <tbody>
+            {% for d in data %}
+        <tr>
+            <td>{{d.erp}} </td>
+            <td>{{d.source_field}} </td>
+            <td>{{d.final_field}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+   
+

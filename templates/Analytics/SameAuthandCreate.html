@@ -1,0 +1,91 @@
+{% extends 'nav.html' %}
+{% block content %}
+{% load humanize %}
+<style>
+
+</style>
+<div class="wmd-view-topscroll">
+        <div class="scroll-div1">
+        </div>
+    </div>
+    <div class="wmd-view">
+        <div class="scroll-div2">
+    <table  class="table" id="JEuser" style=" width: 50%">
+        <tr>
+                <th>Sr No</th>
+                <th>Journal Date</th>
+                <th>Journal Number</th>
+                <th>Journal Type</th>
+                <th>Status Posted Unposted</th>
+                <th>Posting Date</th>
+                <th>Transaction Type</th>
+                <th>Reference No</th>
+                <th>Account Category</th>
+                <th>Main Account Code</th>
+                <th>Main Account Name</th>
+                <th>Sub Account Code</th>
+                <th>Sub Account Name</th>
+                <th>Year</th>
+                <th>Group Name</th>
+                <th>Short Text</th>
+                <th>Tax Reference</th>
+                <th>Split between heads</th>
+                <th>Created By</th>
+                <th>Authorised By</th>
+                <th>Currency Code</th>
+                <th>Debit Amount</th>
+                <th>Credit Amount</th>
+                <th>Debit Amount FC</th>
+                <th>Credit Amount FC</th> 
+                <th>Document Header Text</th>
+                <th>Entity Code</th> 
+        </tr>
+          {% for JE in cre_equ_auth %}
+        <tr>
+            <td>{{JE.SrNo}}</td>
+            <td>{{JE.JournalDate}}</td>
+            <td>{{JE.JournalNumber}}</td>
+            <td>{{JE.JournalType}}</td>
+            <td>{{JE.StatusPostedUnposted}}</td>
+            <td>{{JE.PostingDate}}</td>
+            <td>{{JE.TransactionType}}</td>
+            <td>{{JE.ReferenceNo}}</td>
+            <td>{{JE.AccountCategory}}</td>
+            <td>{{JE.MainAccountCode}}</td>
+            <td>{{JE.MainAccountName}}</td>
+            <td>{{JE.SubAccountCode}}</td>
+            <td>{{JE.SubAccountName}}</td>
+            <td>{{JE.Year}}</td>
+            <td>{{JE.GroupName}}</td>
+            <td>{{JE.ShortText}}</td>
+            <td>{{JE.TaxReference}}</td>
+            <td>{{JE.Splitbetweenheads}}</td>
+            <td>{{JE.CreatedBy}}</td>
+            <td>{{JE.AuthorisedBy}}</td>
+            <td>{{JE.CurrencyCode}}</td>
+            <td>{{JE.DebitAmount|intcomma}}</td>
+            <td>{{JE.CreditAmount|intcomma}}</td>
+            <td>{{JE.DebitAmountFC|intcomma}}</td>
+            <td>{{JE.CreditAmountFC|intcomma}}</td>
+            <td>{{JE.DocumentHeaderText}}</td>
+            <td>{{JE.EntityCode}}</td>
+
+            </tr>
+        {% endfor %}
+    </table> 
+</div>
+</div>
+<script>
+$(function(){
+    $(".wmd-view-topscroll").scroll(function(){
+        $(".wmd-view")
+            .scrollLeft($(".wmd-view-topscroll").scrollLeft());
+    });
+    $(".wmd-view").scroll(function(){
+        $(".wmd-view-topscroll")
+            .scrollLeft($(".wmd-view").scrollLeft());
+    });
+});
+
+</script>
+{% endblock %}

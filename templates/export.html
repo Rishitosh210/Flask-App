@@ -1,0 +1,92 @@
+{% load humanize %}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap.min.css">
+<div class="wmd-view-topscroll">
+        <div class="scroll-div1">
+        </div>
+    </div>
+    <div class="wmd-view">
+        <div class="scroll-div2">
+<table id="example" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                    {% if I.SrNo %} <th>SrNo</th>{% endif %}
+                    {% if I.JournalNumber %}<th>JournalNumber</th> {% endif %}
+                    {% if I.JournalType %}<th>JournalType</th> {% endif %}
+                    {% if I.StatusPostedUnposted %}<th>StatusPostedUnposted</th>{% endif %}
+                    {% if I.PostingDate %}<th>PostingDate</th>{% endif %}
+                    {% if I.TransactionType %}<th>TransactionType</th>{% endif %}
+                    {% if I.ReferenceNo %}<th>ReferenceNo</th>{% endif %}
+                    {% if I.AccountCategory %}<th>AccountCategory</th>{% endif %} 
+                    {% if I.MainAccountCode %}<th>MainAccountCode</th>{% endif %}
+                    {% if I.MainAccountName %}<th>MainAccountName</th>{% endif %}
+                    {% if I.SubAccountCode %}<th>SubAccountCode</th>{% endif %}
+                    {% if I.SubAccountName %}<th>SubAccountName</th> {% endif %}      
+                    {% if I.Year %}<th>Year</th>{% endif %}
+                    {% if I.ShortText %}<th>ShortText</th>{% endif %}
+                    {% if I.TaxReference %}<th>TaxReference</th>{% endif %}
+                    
+        
+            </tr>
+        </thead>
+        <!-- <tr>
+                <td>Tiger Nixon</td>
+            </tr> -->
+                {% for JV in Jv0 %}
+                <tr>
+            {% if JV.SrNo %} <td>{{JV.SrNo}}</td>{% endif %}
+            {% if JV.JournalNumber %} <td>{{JV.JournalNumber}}</td>{% endif %}
+            {% if JV.JournalType %} <td>{{JV.JournalType}}</td>{% endif %}
+            {% if JV.StatusPostedUnposted %} <td>{{JV.StatusPostedUnposted}}</td>{% endif %}
+            {% if JV.PostingDate %} <td>{{JV.PostingDate}}</td>{% endif %}
+            {% if JV.TransactionType %} <td>{{JV.TransactionType}}</td>{% endif %}
+            {% if JV.ReferenceNo %} <td>{{JV.ReferenceNo}}</td>{% endif %}
+            {% if JV.AccountCategory %} <td>{{JV.AccountCategory}}</td>{% endif %}
+            {% if JV.MainAccountCode %} <td>{{JV.MainAccountCode}}</td>{% endif %}
+            {% if JV.MainAccountName %} <td>{{JV.MainAccountName}}</td>{% endif %}
+            {% if JV.SubAccountCode %} <td>{{JV.SubAccountCode}}</td>{% endif %}
+            {% if JV.SubAccountName %}<td>{{JV.SubAccountName}}</td>{% endif %}
+            {% if JV.Year %} <td>{{JV.Year}}</td>{% endif %}
+            {% if JV.ShortText %} <td>{{JV.ShortText}}</td>{% endif %}
+            {% if JV.TaxReference %}   <td>{{JV.TaxReference}}</td>{% endif %}
+                </tr>
+                {% endfor %}
+    </table>
+</div>
+</div>
+
+<script src=" https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="  https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src=" https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+<script src=" https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src=" https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap.min.js"></script>
+
+<script src=" https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src=" https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src=" https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src=" https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src=" https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+<script src=" https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+   
+<script>
+        $(document).ready(function() {
+                var table = $('#example').DataTable( {
+                    lengthChange: false,
+                    buttons: [ 'copy', 'excel', 'pdf', 'colvis' ]
+                } );
+             
+                table.buttons().container()
+                    .appendTo( '#example_wrapper .col-sm-6:eq(0)' );
+        } );
+</script>  
+    
+    
+    
+    
+    
+    
+    
+    
+    

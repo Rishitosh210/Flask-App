@@ -1,0 +1,89 @@
+{% extends 'nav.html' %}
+{% block content %}
+{% load humanize %}
+<style>
+
+</style>
+<div class="wmd-view-topscroll">
+        <div class="scroll-div1">
+        </div>
+    </div>
+    <div class="wmd-view">
+        <div class="scroll-div2">
+    <table  class="table" id="JEuser" style="">
+    <thead>
+         {% if I.SrNo %} <th>SrNo</th>{% endif %}
+         {% if I.JournalDate %}<th>JournalDate</th>{% endif %}
+         {% if I.JournalNumber %}<th>JournalNumber</th> {% endif %}
+         {% if I.JournalType %}<th>JournalType</th> {% endif %}
+         {% if I.StatusPostedUnposted %}<th>StatusPostedUnposted</th>{% endif %}
+         {% if I.PostingDate %}<th>PostingDate</th>{% endif %}
+         {% if I.TransactionType %}<th>TransactionType</th>{% endif %}
+         {% if I.ReferenceNo %}<th>ReferenceNo</th>{% endif %}
+         {% if I.AccountCategory %}<th>AccountCategory</th>{% endif %} 
+         {% if I.MainAccountCode %}<th>MainAccountCode</th>{% endif %}
+         {% if I.MainAccountName %}<th>MainAccountName</th>{% endif %}
+         {% if I.SubAccountCode %}<th>SubAccountCode</th>{% endif %}
+         {% if I.SubAccountName %}<th>SubAccountName</th> {% endif %}      
+         {% if I.Year %}<th>Year</th>{% endif %}
+         {% if I.ShortText %}<th>ShortText</th>{% endif %}
+         {% if I.TaxReference %}<th>TaxReference</th>{% endif %}
+         {% if I.Splitbetweenheads %}<th>Splitbetweenheads</th>{% endif %}
+         {% if I.CreatedBy %}<th>CreatedBy</th>{% endif %}
+         {% if I.AuthorisedBy %}<th>AuthorisedBy</th>{% endif %}
+         {% if I.CurrencyCode %}<th>CurrencyCode</th>{% endif %}
+         {% if I.DebitAmount %}<th>DebitAmount</th>{% endif %}
+         {% if I.CreditAmount %}<th>CreditAmount</th>{% endif %}
+         {% if I.DebitAmountFC %}<th>DebitAmountFC</th>{% endif %}
+         {% if I.CreditAmountFC %}<th>CreditAmountFC</th> {% endif %}
+         {% if I.DocumentHeaderText %}<th>DocumentHeaderText</th>{% endif %}
+         {% if I.EntityCode %}<th>EntityCode</th>{% endif %}
+        </thead>
+        {% for JE in Jvmonth %}
+        <tr>
+           {% if JE.SrNo %} <td>{{JE.SrNo}}</td>{% endif %}
+           {% if JE.JournalDate %} <td>{{JE.JournalDate}}</td>{% endif %}
+           {% if JE.JournalNumber %} <td>{{JE.JournalNumber}}</td>{% endif %}
+           {% if JE.JournalType %} <td>{{JE.JournalType}}</td>{% endif %}
+           {% if JE.StatusPostedUnposted %} <td>{{JE.StatusPostedUnposted}}</td>{% endif %}
+           {% if JE.PostingDate %} <td>{{JE.PostingDate}}</td>{% endif %}
+           {% if JE.TransactionType %} <td>{{JE.TransactionType}}</td>{% endif %}
+           {% if JE.ReferenceNo %} <td>{{JE.ReferenceNo}}</td>{% endif %}
+           {% if JE.AccountCategory %} <td>{{JE.AccountCategory}}</td>{% endif %}
+           {% if JE.MainAccountCode %} <td>{{JE.MainAccountCode}}</td>{% endif %}
+           {% if JE.MainAccountName %} <td>{{JE.MainAccountName}}</td>{% endif %}
+           {% if JE.SubAccountCode %} <td>{{JE.SubAccountCode}}</td>{% endif %}
+           {% if JE.SubAccountName %}<td>{{JE.SubAccountName}}</td>{% endif %}
+           {% if JE.Year %} <td>{{JE.Year}}</td>{% endif %}
+           {% if JE.GroupName %} <td>{{JE.GroupName}}</td>{% endif %}
+           {% if JE.ShortText %} <td>{{JE.ShortText}}</td>{% endif %}
+           {% if JE.TaxReference %}   <td>{{JE.TaxReference}}</td>{% endif %}
+           {% if JE.Splitbetweenheads %} <td>{{JE.Splitbetweenheads}}</td>{% endif %}
+           {% if JE.CreatedBy %} <td>{{JE.CreatedBy}}</td>{% endif %}
+           {% if JE.CurrencyCode %} <td>{{JE.CurrencyCode}}</td>{% endif %}
+           {% if JE.DebitAmount %} <td>{{JE.DebitAmount|intcomma}}</td>{% endif %}
+           {% if JE.CreditAmount %} <td>{{JE.CreditAmount|intcomma}}</td>{% endif %}
+           {% if JE.DebitAmountFC %} <td>{{JE.DebitAmountFC|intcomma}}</td>{% endif %}
+           {% if JE.CreditAmountFC %} <td>{{JE.CreditAmountFC|intcomma}}</td>{% endif %}
+           {% if JE.DocumentHeaderText %} <td>{{JE.DocumentHeaderText}}</td>{% endif %}
+           {% if JE.EntityCode %} <td>{{JE.EntityCode}}</td>{% endif %}
+
+            </tr>
+        {% endfor %}
+    </table> 
+</div>
+</div>
+<script>
+$(function(){
+    $(".wmd-view-topscroll").scroll(function(){
+        $(".wmd-view")
+            .scrollLeft($(".wmd-view-topscroll").scrollLeft());
+    });
+    $(".wmd-view").scroll(function(){
+        $(".wmd-view-topscroll")
+            .scrollLeft($(".wmd-view").scrollLeft());
+    });
+});
+
+</script>
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends 'nav.html' %}
+{% block content %}
+{% load widget_tweaks %}
+{% load static%}
+  <link rel="stylesheet" href="{% static 'new/css/style.css' %}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+.input-group-addon.input-sm {
+  display: block;
+}
+#id_phone_no{
+  
+}
+    div{
+      font-family: '-apple-system'; 
+      }
+    .textInput{
+      text-transform: lowercase;
+    }
+    label{
+      text-transform: capitalize;
+    }
+    .controls {
+      width: 40%;
+    }
+    #id_address{
+      height: 50px;
+      /*width:50;*/
+    }
+    #id_domain_url{
+      width: 100%;
+    }
+    #id_web_address {
+      height: 50px;
+    }
+    #id_phone_no{
+      padding: 10px;
+width: 100%;
+border: 1px solid #ccc;
+border-radius: 3px;
+margin-bottom: 5px;
+box-sizing: border-box;
+font-family: '-apple-system';
+color: rgb(54, 56, 58);
+font-size: 13px;
+    }
+      </style>
+</head>
+<body>
+    {% if form %}
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+    <div class="container"  align=center >
+        <div class="box box-primary">
+            <div class="box-body">
+            <h3 align="center">Firm Details </h3>
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+              {% for error in form.non_field_errors %}
+                {{ error }}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+          {% endif %}
+    
+      {% for field in form.visible_fields %}
+        <div class="form-group col-sm-5">
+          {{ field.label_tag }}
+          {% if form.is_bound %}
+            {% if field.errors %}
+              {% render_field field class="form-control is-invalid" %}
+              {% for error in field.errors %}
+                <div class="invalid-feedback">
+                  {{ error }}
+                </div>
+              {% endfor %}
+            {% else %}
+              {% render_field field class="form-control is-valid" %}
+            {% endif %}
+          {% else %}
+            {% render_field field class="form-control" %}
+          {% endif %}
+    
+          {% if field.help_text %}
+            <small class="form-text text-muted">{{ field.help_text }}</small>
+          {% endif %}
+        </div>
+      {% endfor %}
+        </div>
+      <button align=center type="submit" class="btn btn-primary" >Submit</button>
+    </form>
+    {% endif %}
+    
+    
+      {% for messages in messages %}
+      {% if message.tags == 'error' %}
+            <div id="test1">
+                <div class=" callout callout-danger">
+                  <h4 style="padding: 14px 14px ; text-align:center; font-size: 16px; height:auto; ">{{messages}}</h4>
+            </div>
+          </div>
+      {% else %}
+            <div id="test" >
+                <div class="callout callout-success" >
+            <h4 style="padding: 14px 14px ; text-align:center; font-size: 16px; height:auto; ">{{messages}}</h4>       
+           </div>
+            </div>
+      {% endif %}  
+      {% endfor %}
+
+</body>
+</html>
+{% endblock %}

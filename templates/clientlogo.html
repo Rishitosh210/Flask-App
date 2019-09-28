@@ -1,0 +1,11 @@
+{% extends "nav.html" %}
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">Upload</button>
+</form>
+{% if logo %}
+<p>File uploaded at: <a href="{{ logo }}">{{ logo }}</a></p>
+{% endif %}
+{% endblock %}

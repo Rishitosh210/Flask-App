@@ -1,0 +1,25 @@
+
+{% extends 'nav.html' %}
+{% block content %}
+{% load static %}
+<style>
+th,td{
+    text-align: center;
+}
+</style>
+<a href="/analytics"><button class="btn  btn-primary" type="submit"> analytics</button> </a>
+
+<div class="wmd-view-topscroll">
+    <div class="scroll-div1">
+    </div>
+</div>
+<div class="wmd-view">
+    <div class="scroll-div2">
+    {{frame|safe}}
+</div>
+</div>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script>
+$('tbody').prepend('<tr>{% for data in Fo %}<th>{{data.final_field}}</th>{% endfor %}</tr>')
+</script>
+{% endblock %}

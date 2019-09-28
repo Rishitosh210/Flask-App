@@ -1,0 +1,893 @@
+{% extends 'nav.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% load humanize %}
+{% load audtech_tags %}
+
+<style>
+/*    #ana{
+        display: none;
+    }
+*/.table{
+  background-color: white;
+  margin-left: 20px;
+  padding: 25px;  
+box-shadow: 5px 5px #888888;
+}
+
+.dataframe{
+    width: 20%;
+font-family: '-apple-system', 'BlinkMacSystemFont';
+text-transform: capitalize;
+border-style:hidden;
+}
+
+
+</style>
+
+{% if dataset %}
+<div id="chart1" class="charts"></div>
+<div id="chart2" class="charts"></div>
+{% endif %}
+<!-- Main content -->
+
+<section class="content-header" style="background-color: #d7d7d7">
+    <!-- Main row -->
+    <div class="row">
+        <!-- Left col -->
+        <div class="col-md-9">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title" style="font-size: 13px;"><b>JE WITH RELATED ACCOUNT PARTIES
+                        {{obj.date_gaps}} </b></h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table table-striped table-bordered table no-margin">
+                            <thead>
+                            <tr>
+                                <th>Account Parties</th>
+                                <th>Creator</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for parties in JvP %}
+                            <tr>
+                                <td><a href="{% url 'JVwithRelatedParties' value=parties.MainAccountName %}">{{parties.MainAccountName}}</a>
+                                </td>
+                                <td>{{ parties.c}}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <!-- <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a> -->
+                    <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">Export</a>
+                </div>
+                <!-- /.box-footer -->
+            </div>
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title" style="font-size: 13px;"><b>MONTH WISE TRANSACTION</b></h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table no-margin">
+                            <thead>
+                            <tr>
+                                <th>Month JE</th>
+                                <th>Count JV</th>
+                                <th>Credit Amount</th>
+                                <th>Debit Amount</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for date in Jvmonth %}
+                            <tr>
+                                <td>{{date.Mahina|month_name}}</td>
+                                <td>{{date.month}}</td>
+                                <td>{{ date.Credit|intcomma}} &nbsp; {{Currency}}</td>
+                                <td>{{ date.Debit|intcomma}}&nbsp;{{Currency}}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <!-- <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a> -->
+                    <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">Export</a>
+                </div>
+                <!-- /.box-footer -->
+            </div>
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title" style="font-size: 13px;"><b>TRANSACTION COMMIT</b></h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table no-margin">
+                            <thead>
+                            <tr>
+                                <th>Transaction Type</th>
+                                <th>Generated</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for JE in TransactionType %}
+                            <tr>
+                                <td><a href="{% url 'ManualJE' value=JE.TransactionType %}">{{JE.TransactionType}}</a>
+                                </td>
+                                <td>{{JE.Generated}}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <!-- <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a> -->
+                    <a href="" class="btn btn-sm btn-default btn-flat pull-right">Export</a>
+                </div>
+                <!-- /.box-footer -->
+            </div>
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title" style="font-size: 13px;"><b>LITTLE DESCRIPTION</b></h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table no-margin">
+                            <thead>
+                            <tr>
+                                <th>Short Text</th>
+                                <th>Length</th>
+                                <th>Created By</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for date in JvLittleDesc %}
+                            <tr>
+                                <td><a href="{% url 'ShortTextJV' value=date.ShortText %}">{{date.ShortText}}</a></td>
+                                <td>{{date.len}}</td>
+                                <td>{{date.CreatedBy}}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <!-- <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a> -->
+                    <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">Export</a>
+                </div>
+                <!-- /.box-footer -->
+            </div>
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title" style="font-size: 13px;"><b>POSTED / UN POSTED - AUTHORISED / UN AUTHORISED JE
+                        ORDERS</b></h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table no-margin">
+                            <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Posted Unposted JE</th>
+                                <th>Credit Amount</th>
+                                <th>Debit Amount</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for JE in pos_unpos %}
+                            <tr>
+                                <td><a href="{% url 'PostedUnposted' value=JE.StatusPostedUnposted %}">{{JE.StatusPostedUnposted}}</a>
+                                </td>
+                                <td>{{JE.posted_unposted}}</td>
+                                <td>{{JE.Credit|intcomma}}&nbsp;{{Currency}}</td>
+                                <td>{{JE.Debit|intcomma}}&nbsp;{{Currency}}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <!-- <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a> -->
+                    <a href="/excel_view" class="btn btn-sm btn-default btn-flat pull-right">Export</a>
+                </div>
+                <!-- /.box-footer -->
+            </div>
+            <!-- /.box -->
+
+
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title" style="font-size: 13px;"><b>WEEK DATE</b></h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table no-margin">
+                            <thead>
+                            <tr>
+                                <th>Weekend Date</th>
+                                <th>Date of Week Day</th>
+                                <th>Credit</th>
+                                <th>Debit</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for JE in JVweekend %}
+                            <tr>
+                                <td> {{JE.Week|week_name}}</td>
+                                <td> {{JE.week}}</td>
+                                <td>{{JE.Credit|intcomma}}&nbsp;{{Currency}}</td>
+                                <td>{{JE.Debit|intcomma}}&nbsp;{{Currency}}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <!-- <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a> -->
+                    <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">Export</a>
+                </div>
+                <!-- /.box-footer -->
+            </div>
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title" style="font-size: 13px;"><b>LONG LAPSE</b></h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table id="example" class="table table-striped table-bordered table no-margin">
+                            <thead>
+                            <th>JournalDate</th>
+                            <th>JE PostingDate</th>
+                            <th>Credit Amount</th>
+                            <th>Debit Amount</th>
+                            </thead>
+                            <tbody>
+
+                            <tr>
+                                <td>{{JV_Posting_JOurnal}}</td>
+
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <!-- <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a> -->
+                    <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">Export</a>
+                </div>
+                <!-- /.box-footer -->
+            </div>
+
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title" style="font-size: 13px;"><b>TOP USER CREATION</b></h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table id="example" class="table table-striped table-bordered table no-margin">
+                            <thead>
+                            <th>JE Creator</th>
+                            <th>JE Count</th>
+                            <th>Credit Amount</th>
+                            <th>Debit Amount</th>
+                            </thead>
+                            <tbody>
+                            {% for date in JEuser %}
+                            <tr>
+                                <td><a href="{% url 'total_Tranasacion_according_to_users' value=date.CreatedBy %}">{{date.CreatedBy}}</a>
+                                </td>
+                                <td>{{date.JE}}</td>
+                                <td>{{ date.Credit|intcomma}}&nbsp;{{Currency}}</td>
+                                <td>{{ date.Debit|intcomma}}&nbsp;{{Currency}}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                    <!-- <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a> -->
+                    <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">Export</a>
+                </div>
+                <!-- /.box-footer -->
+            </div>
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3">
+            <!-- Info Boxes Style 2 -->
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title" style="font-size: 13px;"><b>FILE DETAILS</b></h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-footer no-padding">
+                    <ul class="users-list clearfix">
+                        <p style="padding:5px;font-size: 13.5px;border-bottom: 1px solid #d7d7d7">
+                            <b>File Name</b> : <span>{{filename}}</span>
+                        </p>
+                        <p style="padding:5px;padding-bottom: 5px;padding-top: -4px;font-size: 13.5px;border-bottom: 1px solid #d7d7d7">
+                            <b>Engagements Year</b> : <span>{{engangement}}</span>
+                        </p>
+                        <p style="padding:5px;font-size: 13.5px;border-bottom: 1px solid #d7d7d7">
+                            <b>Transaction</b> : <span>{{transaction}}</span>
+                        </p>
+                        <p style="padding:5px;font-size: 13.5px;">
+                            <b>Audit By </b><span>{{username}}</span>
+                        </p>
+                    </ul>
+                    <!-- /.users-list -->
+                </div>
+            </div>
+
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title" style="font-size: 13px;"><b>BALANCES</b></h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+
+                <div class="box-footer no-padding">
+                    <ul class="nav nav-pills nav-stacked">
+                        <p>
+
+                        <p style="padding:5px;font-size: 16px;"><b>Credit Amount </b> <br><span style="font-size: 13px">{{DebCre.Credit__sum|intcomma}}&nbsp;{{Currency}}
+                      </span></p>
+                        <p style="padding:5px ;font-size: 16px;"><b>Debit Amount </b><br><span style="font-size: 13px">{{DebCre.Debit__sum|intcomma}}&nbsp;{{Currency}} </span>
+                        </p>
+                        </p>
+                    </ul>
+                </div>
+                <!-- /.footer -->
+            </div>
+            <!-- /.box -->
+
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title" style="font-size: 13px;"><b>JOURNAL ENTRY GAP</b></h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+
+                <div class="box-footer no-padding">
+                    <ul class="nav nav-pills nav-stacked">
+                        {% if missing %}
+                        <p>
+                        <p><a href="/Missingvalues">
+                        <p style="text-align:center"> {{missing|safe}} </p></a></p>
+                        </p>
+                        {% else %}
+                        <p style="padding:5px">Dont have any Missing Value<span class="pull-right text-yellow"><i
+                                class="fa fa-angle-right"></i></span></a></p>
+                        {% endif %}
+
+                    </ul>
+                </div>
+                <!-- /.footer -->
+            </div>
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title" style="font-size: 13px;"><b>JV AUTHORISED BY <br>&nbsp;<br> SAME USER</b></h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+
+                <div class="box-footer no-padding">
+                    <ul class="nav nav-pills nav-stacked">
+                        {% if missing %}
+                        <p>
+                        <p><a href="/SameAuthandCreate">
+                        <p style="text-align:center"> {{cre_equ_auth_count}} </p></a></p>
+                        </p>
+                        {% else %}
+                        <p style="padding:5px">Values created by different User <span class="pull-right text-yellow"><i
+                                class="fa fa-angle-right"></i></span></a></p>
+                        {% endif %}
+
+                    </ul>
+                </div>
+                <!-- /.footer -->
+            </div>
+
+
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title" style="font-size: 13px;"><b>REPORTS</b></h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+
+                <div class="box-footer no-padding">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li><a href="/JVSummary"> <b>JV Summary</b><span class="pull-right text-yellow"><i
+                                class="fa fa-angle-right"></i></span></a></li>
+                        <li><a href="/LastPeriodEneries"><b>Last Period Eneries</b><span class="pull-right text-yellow"><i
+                                class="fa fa-angle-right"></i></span></a></li>
+                        <li><a href="/LargeEntry"><b>LargeEntry</b><span class="pull-right text-yellow"><i
+                                class="fa fa-angle-right"></i></span></a></li>
+                        <li><a href="/JVNotBalToZero"><b>JV Not Balance To Zero</b><span class="pull-right text-yellow"><i
+                                class="fa fa-angle-right"></i></span></a></li>
+                        <li><a href="/JVAffectingCashAmount"><b>JV Affecting Cash Amount</b><span
+                                class="pull-right text-yellow"><i class="fa fa-angle-right"></i></span></a></li>
+                        <li><a href="/DuplicatesEntries"><b>Duplicates Entries</b><span
+                                class="pull-right text-yellow"><i class="fa fa-angle-right"></i></span></a></li>
+                        <li><a href="/BackDated"><b>Back Dated</b><span class="pull-right text-yellow"><i
+                                class="fa fa-angle-right"></i></span></a></li>
+                        <li><a href="/unusualtimeJE"><b>Unusual time of JE</b><span class="pull-right text-yellow"><i
+                                class="fa fa-angle-right"></i></span></a></li>
+                    </ul>
+                </div>
+                <!-- /.footer -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+<!-- /.content -->
+<!-- <footer class="main-footer">
+
+  <strong>Copyright &copy; 2019 <a href="https://www.ibsl-it.com/">IBSL</a>.</strong> All rights reserved.
+</footer> -->
+
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+    <!-- Create the tabs -->
+    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+        <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+        <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <!-- Home tab content -->
+        <div class="tab-pane" id="control-sidebar-home-tab">
+            <h3 class="control-sidebar-heading">Recent Activity</h3>
+            <ul class="control-sidebar-menu">
+                <li>
+                    <a href="javascript:void(0)">
+                        <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+                        <div class="menu-info">
+                            <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+
+                            <p>Will be 23 on April 24th</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)">
+                        <i class="menu-icon fa fa-user bg-yellow"></i>
+
+                        <div class="menu-info">
+                            <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+
+                            <p>New phone +1(800)555-1234</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)">
+                        <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+
+                        <div class="menu-info">
+                            <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+
+                            <p>nora@example.com</p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)">
+                        <i class="menu-icon fa fa-file-code-o bg-green"></i>
+
+                        <div class="menu-info">
+                            <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+
+                            <p>Execution time 5 seconds</p>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <!-- /.control-sidebar-menu -->
+
+            <h3 class="control-sidebar-heading">Tasks Progress</h3>
+            <ul class="control-sidebar-menu">
+                <li>
+                    <a href="javascript:void(0)">
+                        <h4 class="control-sidebar-subheading">
+                            Custom Template Design
+                            <span class="label label-danger pull-right">70%</span>
+                        </h4>
+
+                        <div class="progress progress-xxs">
+                            <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)">
+                        <h4 class="control-sidebar-subheading">
+                            Update Resume
+                            <span class="label label-success pull-right">95%</span>
+                        </h4>
+
+                        <div class="progress progress-xxs">
+                            <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)">
+                        <h4 class="control-sidebar-subheading">
+                            Laravel Integration
+                            <span class="label label-warning pull-right">50%</span>
+                        </h4>
+
+                        <div class="progress progress-xxs">
+                            <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)">
+                        <h4 class="control-sidebar-subheading">
+                            Back End Framework
+                            <span class="label label-primary pull-right">68%</span>
+                        </h4>
+
+                        <div class="progress progress-xxs">
+                            <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            <!-- /.control-sidebar-menu -->
+
+        </div>
+        <!-- /.tab-pane -->
+
+        <!-- Settings tab content -->
+        <div class="tab-pane" id="control-sidebar-settings-tab">
+            <form method="post">
+                <h3 class="control-sidebar-heading">General Settings</h3>
+
+                <div class="form-group">
+                    <label class="control-sidebar-subheading">
+                        Report panel usage
+                        <input type="checkbox" class="pull-right" checked>
+                    </label>
+
+                    <p>
+                        Some information about this general settings option
+                    </p>
+                </div>
+                <!-- /.form-group -->
+
+                <div class="form-group">
+                    <label class="control-sidebar-subheading">
+                        Allow mail redirect
+                        <input type="checkbox" class="pull-right" checked>
+                    </label>
+
+                    <p>
+                        Other sets of options are available
+                    </p>
+                </div>
+                <!-- /.form-group -->
+
+                <div class="form-group">
+                    <label class="control-sidebar-subheading">
+                        Expose author name in posts
+                        <input type="checkbox" class="pull-right" checked>
+                    </label>
+
+                    <p>
+                        Allow the user to show his name in blog posts
+                    </p>
+                </div>
+                <!-- /.form-group -->
+
+                <h3 class="control-sidebar-heading">Chat Settings</h3>
+
+                <div class="form-group">
+                    <label class="control-sidebar-subheading">
+                        Show me as online
+                        <input type="checkbox" class="pull-right" checked>
+                    </label>
+                </div>
+                <!-- /.form-group -->
+
+                <div class="form-group">
+                    <label class="control-sidebar-subheading">
+                        Turn off notifications
+                        <input type="checkbox" class="pull-right">
+                    </label>
+                </div>
+                <!-- /.form-group -->
+
+                <div class="form-group">
+                    <label class="control-sidebar-subheading">
+                        Delete chat history
+                        <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
+                    </label>
+                </div>
+                <!-- /.form-group -->
+            </form>
+        </div>
+        <!-- /.tab-pane -->
+    </div>
+</aside>
+<!-- /.control-sidebar -->
+<!-- Add the sidebar's background. This div must be placed
+     immediately after the control sidebar -->
+<div class="control-sidebar-bg"></div>
+
+</div>
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
+<script>
+              Highcharts.chart('chart1', {
+                  chart: {
+                      type: 'column'
+                  },
+                  title: {
+                      text:'Status Transactions'
+                  },
+                  xAxis: {
+                      categories: [
+                        {% for entry in dataset %}'{{ entry.StatusPostedUnposted }} Class'{% if not forloop.last %}, {% endif %}{% endfor %}
+                      ]
+                  },
+                  series: [{
+                      name: 'Status',
+                      data: [
+                        {% for entry in dataset %}{{ entry.survived_count }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                      ],
+                      color: 'lightblue'
+                  }, {
+                      name: 'Type',
+                      data: [
+                        {% for entry in dataset %}{{ entry.not_survived_count }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                      ],
+                      color: 'dark'
+                  }]
+              });
+
+</script>
+<script>
+                    Highcharts.chart('chart2', {
+                        chart: {
+                            type: 'pie'
+                        },
+                        title: {
+                            text: 'Maanalyticsni Accnt Catg'
+                        },analytics
+                        xAxis: {analytics
+                            categorieanalyticss: [
+                              {% for entry in dataset %}'{{ entry.acct_category }} Class'{% if not forloop.last %}, {% endif %}{% endfor %}
+                            ]
+                        },
+                        series: [{
+                            name: 'Status',
+                            data: [
+                              {% for entry in dataset %}{{ entry.survived_count }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                            ],
+                            color: 'green'
+                        }, {
+                            name: 'Type',
+                            data: [
+                              {% for entry in dataset %}{{ entry.not_survived_count }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                            ],
+                            color: 'blue'
+                        }]
+                    });
+
+</script>
+<!-- <script>
+$(document).ready(function(){
+$("#chart").click(function(){
+$(".charts").toggle();
+});
+$("#show").click(function(){
+$(".dataframe").toggle();
+});
+//   $("#show").click(function(){
+//     $(".dataframe").hide();
+//   });
+$("#JEUS").click(function(){
+$("#JEuser").toggle();
+});
+$("#pos_un").click(function(){
+$("#Status").toggle();
+});
+$("#generated").click(function(){
+$("#auto_manual").toggle();
+});
+$("#JEana").click(function(){
+$("#ana").toggle();
+});
+});
+</script> -->
+<!--        <script type="text/javascript">
+$("#btnExport").click(function (e) {
+    window.open('data:application/vnd.ms-excel,' + $('.table').html());
+    e.preventDefault();
+});
+       </script> -->
+<!--  -->
+<!-- <script>
+        $(function() {
+        $( "#analytics" ).dialog({
+        modal: true,
+        autoOpen=false,
+        resizable: false,
+         buttons : [
+             {text  : 'karo',
+             class : 'button-class',
+            click : function() {
+            $(this).dialog('close');
+    }
+      }]
+    });
+    $( "#opener" ).on( "click", function() {
+        $( "#analytics" ).dialog( "open" );
+});
+     });
+</script> -->
+<!-- <script>
+      $( function() {
+        $( "#analytics" ).dialog({
+          autoOpen: false,
+          modal: true,
+          show: {
+            effect: "blind",
+            duration: 1000
+          },
+          hide: {
+            effect: "fold",
+            duration: 1000
+          },
+          buttons : [
+               {text  : 'cancel',
+               class : 'button-class',
+              click : function() {
+              $(this).dialog('close');
+      }
+        }]
+        });
+
+        $( "#opener" ).on( "click", function() {
+          $( "#analytics" ).dialog( "open" );
+        });
+      } );
+      </script> -->
+{% endblock %}
+         
+         

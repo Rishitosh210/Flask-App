@@ -1,0 +1,52 @@
+{% extends "nav.html" %}
+{% block content %}
+{% load humanize %}
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+<div id="dvData">
+        <table  class="table" id="JEuser" style="">
+            <thead>
+                    <tr>
+                            <th>Journal Date</th>
+                            <th>Posting Date</th>
+                            <th>Main Account Code</th>
+                            <th>Main Account Name</th>
+                            <th>Debit Amount</th>
+                            <th>Credit Amount</th>
+                            <th>Document Header Text</th>
+                    </tr>
+            </thead>
+    <tbody>
+            {% for JE in LastPeriodEneries %}
+            <tr>
+                <td>{{JE.JournalDate}}</td>
+                <td>{{JE.PostingDate}}</td>
+                <td>{{JE.MainAccountCode}}</td>
+                <td>{{JE.MainAccountName}}</td>
+                <td>{{JE.DebitAmount|intcomma}}</td>
+                <td>{{JE.CreditAmount|intcomma}}</td>
+                <td>{{JE.DocumentHeaderText}}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td>No Records </td>
+            </tr>
+            {% endfor %}
+
+    </tbody>
+<tfoot>
+    <tr>
+        <td></td>
+    </tr>
+</tfoot>
+        </table> 
+    </div>
+    <script src="    https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src=" https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script>
+    $(document).ready(function() {
+    $('#JEuser').DataTable();
+} );
+</script>
+    {% endblock %}

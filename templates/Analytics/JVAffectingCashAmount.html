@@ -1,0 +1,40 @@
+{% extends "nav.html" %}
+{% block content %}
+{% load humanize %}
+<div>
+    <p>Top 50 Debit amount </p>
+</div>
+<div class="wmd-view-topscroll">
+        <div class="scroll-div1">
+        </div>
+    </div>
+    <div class="wmd-view">
+        <div class="scroll-div2">
+        <table  class="table table-striped table-bordered table no-margin" id="JEuser" >
+                <thead>
+                     <th>Sr No</th>
+                      <th>Journal Date</th>
+                      <th>Journal Number</th> 
+                      <th>Posting Date</th>
+                      <th>Main Account Name</th>
+                      <th>Debit Amount</th>
+                      <th>Credit Amount</th>
+
+
+                    </thead>
+                    {% for JE in Jv_Cash %}
+                    <tr>
+                         <td>{{JE.SrNo}}</td>
+                         <td>{{JE.JournalDate}}</td>
+                         <td>{{JE.JournalNumber}}</td>
+                         <td>{{JE.PostingDate}}</td>
+                         <td>{{JE.MainAccountName}}</td>
+                         <td>{{JE.DebitAmount|intcomma}}&nbsp;{{Currency}}</td>
+                         <td>{{JE.CreditAmount|intcomma}}&nbsp;{{Currency}}</td>
+
+                         
+                         </tr>
+                    {% endfor %}
+                </table> 
+    </div>
+    {% endblock%}

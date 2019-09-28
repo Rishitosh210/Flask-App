@@ -1,0 +1,37 @@
+{%extends 'base.html' %}
+{% load staticfiles %}
+
+<table id="example" class="table table-bordered" style="width:100%" style="height:100% ">
+    <thead class="thead-inverse">
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>email</th>
+        <th>company_ode</th>
+        <th>company_type</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    {% for data in data %}
+    <tr>
+        <td>{{ data.CLientRegister|default:"null"}} <a href="/ClientRegister/">
+            <button img src="{% static  'chevron-01-512.png'%}" width="50px"
+            ></button>
+        </a></td>
+        <td>{{data.id}}</td>
+        <td>{{ data.STATUS|default:"null"}}</td>
+        <td>{{ data.TYPE|default:"null"}}</td>
+        <td>{{ data.TD_DIVN_CODE|default:"null"}}</td>
+        <td>{{ data.SR_NO|default:"null"}}</td>
+    </tr>
+
+    {% endfor %}
+    </tbody>
+
+    <tfoot>
+    <tr>
+
+    </tr>
+    </tfoot>
+</table>

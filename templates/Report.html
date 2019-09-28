@@ -1,0 +1,70 @@
+
+  {%  extends  'nav.html' %}
+  {% block content %}
+  {% include 'all_render.html' %}
+  <style>
+  .dataframe{
+    width: 78%;
+    background-color: #ffffff;
+    max-width: 100%;
+margin-bottom: 20px;
+text-transform: capitalize;
+border-color: #ffffff;
+width: 50%;
+    border-spacing: 0;
+border-collapse: collapse;
+}
+</style>
+<form method="POST">
+  {% csrf_token %}
+    <select id="status" name="status" class="">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="2">2</option>
+        <option value="12">12</option>
+      </select> 
+      <label class="form-group" >Debit or Credit</label>
+      <select required class="" name="value">
+            <option value="cr_in_fc">Credit Amount in FC</option>
+            <option value="dr_in_fc">Debit Amount in FC</option>
+            </select>
+      <button class="button" type="submit">See</button>
+</form>
+<table class="table table-dark"  style="width:50%;"> 
+            
+                    <thead class="thread-inverse">
+                        <tr>
+                            <th>cr_in_fc</th>
+        
+                        </tr>  
+                    </thead>
+                    <tbody>
+                        {% for JE in data %}
+                        <tr>
+                            <td> {{JE.cpf}} </td>                    
+                        </tr>  
+                        {% endfor %}
+                    </tbody> 
+                         
+                      <tfoot>
+                          <tr>
+                              
+                          </tr>
+                      </tfoot>
+        </table>
+
+{% if missing %}
+{{missing|safe}}
+{% else %}
+<li>Nothing</li>
+{% endif %}
+
+ {% if cre_equ_auth %}
+{{cre_equ_auth|safe}}
+    {% else %}
+    <li>None</li>
+{% endif %}
+<script>
+        $('tbody').sortable();
+    </script> 
+{% endblock %}

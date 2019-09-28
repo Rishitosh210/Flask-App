@@ -1,0 +1,27 @@
+{% include "all_render.html" %}
+
+    <head>
+        {% load staticfiles %}
+        <link rel="stylesheet"  type="text/css" href="{% static 'css/dialog1.css' %}">
+        {% if domain_url%}
+     <script> 
+var url = "{{domain_url}}";
+alert(url.concat(" Created successfully")); 
+window.location="/login";
+</script>
+{% endif %}
+
+</head>
+
+<body style="background:#005096;;">
+        <!-- {% if messages %}
+        <div id="test" class="form-group" >
+        {% for messages in messages %}
+        <li style="background-color:#fff;padding: 40px 20px ; text-align:center; font-size:15px; height:90; " >{{messages}}</li>
+        {% endfor %}
+        </div>
+        {% endif %}  -->
+        <div id="test">
+        <li style="background-color:#fff;padding: 40px 20px ; text-align:center; font-size:15px; height:90; ">TEST TEST</li>
+        </div>
+    </body>

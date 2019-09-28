@@ -1,0 +1,79 @@
+
+{% extends 'nav.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+<style>
+
+.control-label {
+    text-align: center;
+ }
+    .textinput, .textarea, .emailinput, .dateinput, .select {
+      text-transform: capitalize;
+      width:200px;      
+      }
+
+      h2,div{
+        font-family: '-apple-system';
+      }
+      .container{
+        background-color: white;
+      }
+      </style>
+<div class="container" >
+    {% if form %}
+    {% crispy form %}
+    {% endif %}
+      </div>
+      {% for messages in messages %}
+      {% if message.tags == 'error' %}
+            <div id="test">
+                <div class=" callout callout-success">
+                  <h4 style="padding: 14px 14px ; text-align:center; font-size: 16px; height:auto; ">{{messages}}</h4>
+            </div>
+          </div>
+      {% else %}
+            <div id="test1" >
+                <div class="callout callout-danger" >
+            <h4 style="padding: 14px 14px ; text-align:center; font-size: 16px; height:auto; ">{{messages}}</h4>       
+           </div>
+            </div>
+      {% endif %}  
+      {% endfor %}
+      <script>
+        $(function() {
+            $( "#test" ).dialog({
+        modal: true,
+        resizable: false,
+         buttons : [
+             {text  : 'permission',
+             class : 'button-class',
+            click : function() {
+            $(this).dialog('close');
+          window.location="/home";
+    }
+      }]
+    }); 
+     });
+    </script>
+     <script>
+     $(function() {
+            $( "#test1" ).dialog({
+        modal: true,
+        resizable: false,
+         buttons : [
+             {text  : 'close',
+             class : 'button-class',
+            click : function() {
+            $(this).dialog('close');
+            window.location="/permission";
+    }, 
+     }],
+}); 
+     });
+     </script>
+<script type="text/javascript">
+	$('.form-control').attr('class','form-control col-md-12');
+    $('.form-group').attr('class','form-group col-md-6');
+</script>
+
+      {% endblock %}

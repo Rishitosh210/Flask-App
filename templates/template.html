@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+<head>
+  <title>pandas</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'bootstrap-table-master/docs/dist/bootstrap-table.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap/js/bootstrap.min.cs'%}"> 
+</head>
+<body>
+<h1>pandas</h1>
+<ul>  
+</ul>
+<form method="post">
+  {% csrf_token %}
+  {{ form }}
+  <div class="form-group">
+    <button type="submit" class="btn btn-success">
+      <span class="glyphicon glyphicon-ok"></span> Save
+    </button>
+    <a href="" class="btn btn-default">Cancel</a>
+  </div>
+</form>
+  <table id='datatable'></table>
+  {% load static %}
+    <script src=" https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="{% static 'js/bootstrap.min.js'%}"></script>
+<script src="{% static 'js/jquery.min.js' %}" ></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.js' %}"></script>
+
+<script src="{% static 'bootstrap-table-master/docs/dist/bootstrap-table.js' %}""></script>
+
+<script type="text/javascript">
+$(function() {
+  $('#datatable')({
+    striped: true,
+    pagination: true,
+    showColumns: true,
+    showToggle: true,
+    showExport: true,
+    sortable: true,
+    paginationVAlign: 'both',
+    pageSize: 25,
+    pageList: [10, 25, 50, 100, 'ALL'],
+    columns: {{ columns | safe }},  // here is where we use the column content from our Django View
+    data: {{ data | safe }}, // here is where we use the data content from our Django View. we escape the content with the safe tag so the raw JSON isn't shown.
+  });
+});
+</script>
+</body>
+</html>
+
+
+

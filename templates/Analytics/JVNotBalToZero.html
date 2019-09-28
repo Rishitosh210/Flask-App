@@ -1,0 +1,96 @@
+{% extends "nav.html" %}
+{% block content %}
+{% load humanize %}
+
+<div class="wmd-view-topscroll">
+        <div class="scroll-div1">
+        </div>
+    </div>
+    <div class="wmd-view">
+        <div class="scroll-div2">
+    <table  class="table table-striped table-bordered" id="example" style="">
+    <thead>
+         <th>Sr No</th>
+        <th>Journal Date</th>
+        <th>Journal Number</th> 
+        <th>Journal Type</th> 
+       <th>Status Posted Unposted</th>
+        <th>Posting Date</th>
+        <th>Transaction Type</th>
+        <th>Reference No</th>
+        <th>Account Category</th> 
+        <th>Main Account Code</th>
+        <th>Main Account Name</th>
+        <th>Sub Account Code</th>
+        <th>Sub Account Name</th>        
+        <th>Year</th>     
+        <th>Short Text</th>
+        <th>Tax Reference</th>
+        <th>Split between heads</th>
+        <th>Created By</th>
+        <th>Authorised By</th>
+        <th>Currency Code</th>
+        <th>Debit Amount</th>
+        <th>Credit Amount</th>
+        <th>Debit Amount FC</th>
+        <th>Credit Amount FC</th> 
+        <th>Document Header Text</th>     
+        <th>Entity Code</th>
+        </thead>
+    <tbody>
+        {% for JV in Jv0 %}
+        <tr>
+          <td>{{JV.SrNo}}</td>
+          <td>{{JV.JournalDate}}</td>
+          <td>{{JV.JournalNumber}}</td>
+          <td>{{JV.JournalType}}</td>
+          <td>{{JV.StatusPostedUnposted}}</td>
+          <td>{{JV.PostingDate}}</td>
+          <td>{{JV.TransactionType}}</td>
+          <td>{{JV.ReferenceNo}}</td>
+          <td>{{JV.AccountCategory}}</td>
+          <td>{{JV.MainAccountCode}}</td>
+          <td>{{JV.MainAccountName}}</td>
+          <td>{{JV.SubAccountCode}}</td>
+          <td>{{JV.SubAccountName}}</td>
+          <td>{{JV.Year}}</td>
+          <td>{{JV.ShortText}}</td>
+          <td>{{JV.TaxReference}}</td>
+          <td>{{JV.Splitbetweenheads}}</td>
+          <td>{{JV.CreatedBy}}</td>
+          <td>{{JV.AuthorisedBy}}</td>
+          <td>{{JV.CurrencyCode}}</td>
+          <td>{{JV.DebitAmount|intcomma}}&nbsp;{{Currency}}</td>
+          <td>{{JV.CreditAmount|intcomma}}&nbsp;{{Currency}}</td>
+          <td>{{JV.DebitAmountFC|intcomma}}&nbsp;{{Currency}}</td>
+          <td>{{JV.CreditAmountFC|intcomma}}&nbsp;{{Currency}}</td>
+          <td>{{JV.DocumentHeaderText}}</td>
+          <td>{{JV.EntityCode}}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    </table> 
+</div>
+</div>
+{% if Jv0.has_other_pages %}
+  <ul class="pagination">
+    {% if Jv0.has_previous %}
+      <li><a href="?page={{ Jv0.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in Jv0.paginator.page_range %}
+      {% if Jv0.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if Jv0.has_next %}
+      <li><a href="?page={{ Jv0.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+    {% endblock %}

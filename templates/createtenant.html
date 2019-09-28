@@ -1,0 +1,38 @@
+{% load crispy_forms_tags %}
+{% load static%}
+<style>
+#id_schema_name,#id_domain_url{
+  text-transform: lowercase;
+}
+.asteriskField{
+  display: None;
+}
+</style>
+<link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'dist/css/AdminLTE.min.css' %}">
+<div class="box box-primary">
+    <form method="post" class="">
+      {{error}}
+            {% csrf_token %}
+            <div class="box-body">
+            <div class="row">
+              <div class="form-group col-md-6 mb-0">
+                {{ form.username|as_crispy_field }}
+                {{form.password|as_crispy_field }}                                 
+              </div>
+              <div class="form-group col-md-6 mb-0">
+                {{ form.schema_name|as_crispy_field }}
+                {{ form.domain_url|as_crispy_field }}
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Assign Url</button>&nbsp;&nbsp;&nbsp;
+        </div>
+    </form>
+    <a href="/logout"><button class="btn btn-primary ">Logout</button></a>
+</div>
+
+  {% if Good %}
+    
+  <h4 style="padding: 14px 14px ; text-align:center; font-size: 16px; height:auto; ">{{Good}}</h4>  {% endif %}  
+
+   

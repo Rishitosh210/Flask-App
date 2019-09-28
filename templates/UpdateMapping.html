@@ -1,0 +1,86 @@
+
+{% load static%}
+<style type="text/css">
+.flex-container {
+  display: flex;
+  /* background-color: rgb(187, 190, 194); */
+}
+.body{
+    background-color: rgb(190, 190, 190);
+}
+table{
+    background-color: #ffffff;
+  
+}
+td,th{
+    font-family: '-apple-system';
+  font-size: 15px;
+  text-align: center;
+}
+.flex-container > h4 {
+  background-color: #ffffff;
+  margin: 10px;
+  padding: 20px;
+  font-size: 15px;
+  color:rgb(24, 22, 22);
+}
+</style>
+
+<title>Update  Mapping</title>
+<body class="body">
+<div align=center class="flex-container">
+    <h4 style="font-family: -apple-system" > ClientName : {{clientname}} </h4>
+    <h4 style="font-family: -apple-system">Engagement : {{eng}}</h4>
+    <h4 style="font-family: -apple-system">System ERP : {{erp}}</h4>
+</div>
+<form style="" id="myform" method="POST">
+{% csrf_token %}
+<ul align="right" style="padding-left:3%"><button class="button"  type="submit" value="submit">Submit</button></ul>
+<h4 class="InputField">InputField</h4>
+<h4 class="Audtech">AudtechField</h4>
+{{frame|safe}}
+</form>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script>
+// var cycleArr = {{count|safe}};
+
+// var strTable = "";
+// for(var i = 0; i < cycleArr.length; i++) {
+//   for(var j = 0; j < cycleArr[i].length; j++) {
+//     strTable += "<th>";
+//     strTable += cycleArr[i][j];
+//     strTable += "</th>";
+//   }
+// }
+// $('#model').append(strTable);
+// $('th').appendTo('.dataframe')
+$('').appendTo('')
+$('th').append("<select class='select1' required><option value=''></option></select>")
+</script>
+<script>
+		var numbers = ['Doc. Header Text','Document Date','posting_date','Tax Lines','Year','Currency','Sr_no','Acct_category','amount','cr_gl_curr_code','tr_code','Main_acct_name','authorised_by','company_code','Main_acct_code','dc_no','sub_acct_name','cr_in_fc','Doc_date','created_by','doc_date','Posting Date','dr_in_fc','auto_,manual','Tax Lines','Type_regular','doc_head_text','Div_code','sub_acct_code','Null','tax_reference','dr_gl_curr_code','tr_curr_code','Status_op_posted_unposted'];
+		for (var i=0;i<numbers.length;i++){
+		   $('<option/>').val(numbers[i]).html(numbers[i]).appendTo('.select1');
+		}
+  // the table is added to the HTML div element
+    var rows = $('select');
+    for (var i=0; i < rows.length; ++i){
+        rows[i].name = "C" + (i+1);  // this is how you assign IDs
+        console.log(rows[i]);
+	}
+</script>
+</body>
+<!-- <script>
+    $('.dataframe tr').each(function() {
+    var $tds = $(this).find('td');
+    if($tds.length != 0) {
+    var $currText = $tds.eq(0).text();
+	var i;
+	var text="";
+	for (i = 0; i < $currText.length; i++) {
+  	text += $currText[i];} 
+    $("#1").append(text + '</br>');  
+    }
+    });
+	
+</script> -->

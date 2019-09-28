@@ -1,0 +1,34 @@
+{% extends 'nav.html'%}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+  <style>
+    select{
+      width: 50%;
+    }
+    .asteriskField{
+      display: none;
+}
+.form-control{
+  width: 50%;
+}
+   </style>
+
+<div class=""  align=center style="padding:80px 120px;background-color:" ">
+    <div class="box box-primary">
+        {% if error %}<p style="color: rgb(0, 0, 0); font-size: 15px;font-family: '-apple-system';">{{error}}</p>{% endif %}
+  <h3 style=font-family:-apple-system> <b>Import Data</b> </h3>
+  {% csrf_token %}
+{% crispy form %}
+</div>
+  <!-- <input id ="new_table" type="checkbox" name="new_table" value=""> New Table<br> -->
+</div>
+
+{% endblock %}
+<!-- <div id="form1">
+<form method="POST">
+{{form1}}
+</form>
+</div>
+-->
+
